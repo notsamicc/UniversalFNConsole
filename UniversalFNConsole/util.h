@@ -68,7 +68,7 @@ public:
             else
                 line++;
         };
-        file.close();     
+        file.close();
         return std::stod(fortniteVersion);
     }
 
@@ -89,5 +89,10 @@ public:
         MODULEINFO info = { 0 };
         GetModuleInformation(GetCurrentProcess(), GetModuleHandle(0), &info, sizeof(info));
         return FindPattern(info.lpBaseOfDll, info.SizeOfImage, lpPattern, lpMask);
+    }
+
+    static uintptr_t BaseAddress()
+    {
+        return reinterpret_cast<uintptr_t>(GetModuleHandle(0));
     }
 };

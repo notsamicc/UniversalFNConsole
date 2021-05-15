@@ -75,3 +75,11 @@ struct UEngine426
 	char unknown2[0x688];
 	UGameViewportClient* GameViewportClient;
 };
+
+struct UEngine530
+{
+	char unknown1[0xF8];
+	UClass* ConsoleClass;
+	char unknown2[0x642];
+	UGameViewportClient* GameViewportClient;
+};

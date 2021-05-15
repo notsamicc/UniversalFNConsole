@@ -63,7 +63,7 @@ static void EnableConsole(double EngineVersion, double FortniteVersion)
 			SCOIAddress = SCOIOffset + 5 + *reinterpret_cast<int32_t*>(SCOIOffset + 1);
 			StaticConstructObject_Internal = reinterpret_cast<fStaticConstructObject_Internal>(SCOIAddress);
 
-			if (FortniteVersion < 5.4)
+			if (FortniteVersion < 5.3)
 			{
 				UEngine421* GEngine;
 				GEngineOffset = Util::FindPattern("\x48\x8B\xD1\x49\x89\x00\x00\x48\x8B\x0D\x00\x00\x00\x00\x00\x00\x00\x49\x89", "xxxxx??xxx???????xx");
@@ -72,7 +72,11 @@ static void EnableConsole(double EngineVersion, double FortniteVersion)
 
 				GEngine->GameViewportClient->ViewportConsole = ConstructConsole(GEngine->ConsoleClass, reinterpret_cast<UObject*>(GEngine->GameViewportClient));
 			}
-
+			else if (FortniteVersion == 5.3)
+			{
+				UEngine530* GEngine = *reinterpret_cast<UEngine530**>(Util::BaseAddress() + 0x5485C28);
+				GEngine->GameViewportClient->ViewportConsole = ConstructConsole(GEngine->ConsoleClass, reinterpret_cast<UObject*>(GEngine->GameViewportClient));
+			}
 			else
 			{
 				UEngine4212* GEngine;
