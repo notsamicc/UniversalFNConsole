@@ -26,7 +26,7 @@ struct UEngine421
 {
 	char unknown1[0xF8];
 	UClass* ConsoleClass;
-	char unknown3[0x621];
+	char unknown2[0x621];
 	UGameViewportClient* GameViewportClient;
 };
 
