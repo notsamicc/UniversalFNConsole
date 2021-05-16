@@ -1,7 +1,8 @@
 #include "util.h"
 #include "structs.h"
 
-typedef UObject* (__fastcall* fStaticConstructObject_Internal)(
+typedef UObject* (__fastcall* fStaticConstructObject_Internal)
+(
 	UClass* Class,
 	UObject* InOuter,
 	void* Name,

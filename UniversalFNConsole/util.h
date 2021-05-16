@@ -6,6 +6,44 @@
 #include <iostream>
 #include <string>
 
+template<class T>
+struct TArray
+{
+    T* Data;
+    int Count;
+    int Max;
+};
+
+struct FString : public TArray<wchar_t>
+{
+    inline const wchar_t* c_str() const
+    {
+        return Data;
+    }
+
+    std::string ToString() const
+    {
+        const auto length = std::wcslen(Data);
+
+        std::string str(length, '\0');
+
+        std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(Data, Data + length, '?', &str[0]);
+
+        return str;
+    }
+};
+
+void* Result;
+
+typedef FString* (__fastcall* fGetEngineVersion)
+(
+    void* Result
+);
+
+static fGetEngineVersion GetEngineVersion;
+
+std::string text;
+
 class Util
 {
 private:
@@ -19,57 +57,18 @@ private:
         return true;
     }
 public:
-    static double GetEngineVersion()
+    static double EngineVersion()
     {
-        int line = 1;
-        std::string path = getenv("localappdata");
-        std::ifstream file;
-        std::string text;
-        std::string engineVersion = "Engine Version: ";
+        std::string EngineVersion = text.substr(0, 4);
 
-        path += "\\FortniteGame\\Saved\\Logs\\FortniteGame.log";
-
-        file.open(path.c_str());
-
-        while (std::getline(file, text))
-        {
-            if (text.find(engineVersion, 0) != std::string::npos)
-            {
-                engineVersion = text.substr(25, 4);
-                break;
-            }
-            else
-                line++;
-        };
-        file.close();
-
-        return std::stod(engineVersion);
+        return std::stod(EngineVersion);
     }
 
-    static double GetFortniteVersion()
+    static double FortniteVersion()
     {
-        int line = 1;
-        std::string path = getenv("localappdata");
-        std::ifstream file;
-        std::string text;
-        std::string fortniteVersion = "Fortnite+Release";
+        std::string FortniteVersion = text.substr(34, 4);
 
-        path += "\\FortniteGame\\Saved\\Logs\\FortniteGame.log";
-
-        file.open(path.c_str());
-
-        while (std::getline(file, text))
-        {
-            if (text.find(fortniteVersion, 0) != std::string::npos)
-            {
-                fortniteVersion = text.substr(35, 5);
-                break;
-            }
-            else
-                line++;
-        };
-        file.close();
-        return std::stod(fortniteVersion);
+        return std::stod(FortniteVersion);
     }
 
     static uintptr_t FindPattern(PVOID pBase, DWORD dwSize, LPCSTR lpPattern, LPCSTR lpMask)

@@ -6,6 +6,8 @@ struct UClass;
 
 struct UConsole;
 
+struct FString;
+
 struct UGameViewportClient
 {
     char unknown1[0x40];
@@ -24,7 +26,7 @@ struct UEngine421
 {
 	char unknown1[0xF8];
 	UClass* ConsoleClass;
-	char unknown2[0x621];
+	char unknown3[0x621];
 	UGameViewportClient* GameViewportClient;
 };
 
